@@ -10,7 +10,7 @@ $ gem install stackflame
 
 ## Usage
 
-```
+```ruby
 require "stackflame"
 
 Stackflame.profile do
