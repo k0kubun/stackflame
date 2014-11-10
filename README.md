@@ -14,9 +14,14 @@ $ gem install stackflame
 require "stackflame"
 
 Stackflame.profile do
-  1000.times { User.all.to_a }
+  # some code to profile
+  100.times { User.create }
 end
 ```
+
+If you use OSX, flamegraph will be opened with your default browser.
+
+![](http://i.gyazo.com/47871c2de985298c61d0fcca041a34d0.png)
 
 ## License
 
