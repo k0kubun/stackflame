@@ -11,4 +11,5 @@
 *.so
 *.o
 *.a
+*.sqlite3
 mkmf.log
