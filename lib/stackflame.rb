@@ -29,7 +29,7 @@ class Stackflame
 
   def flamegraph_path
     viewer_path = File.expand_path('../../vendor/viewer.html', __FILE__)
-    "file://#{viewer_path}\?data=#{temp_js_path}"
+    "file://#{viewer_path}?data=#{temp_js_path}"
   end
 
   def temp_js_path
