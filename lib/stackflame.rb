@@ -1,4 +1,5 @@
 require "stackflame/version"
+require "rack/stackflame"
 require "stackprof"
 
 class Stackflame
