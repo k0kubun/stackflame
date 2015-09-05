@@ -16,13 +16,14 @@ module Rack
     def call(env)
       result = nil
 
-      stackflame = ::Stackflame.new
-      stackflame.run(@options) do
-        result = @app.call(env)
-      end
-
       if @block.call(env)
+        stackflame = ::Stackflame.new
+        stackflame.run(@options) do
+          result = @app.call(env)
+        end
         stackflame.open_flamegraph(request: env['PATH_INFO'])
+      else
+        result = @app.call(env)
       end
 
       result
