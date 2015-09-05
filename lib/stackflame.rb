@@ -47,7 +47,7 @@ class Stackflame
 
     queries = []
     params.each do |key, value|
-      queries << "#{URI.escape(key)}=#{URI.escape(value)}"
+      queries << "#{URI.escape(key.to_s)}=#{URI.escape(value.to_s)}"
     end
     "?#{queries.join('&')}"
   end
