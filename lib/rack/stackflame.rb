@@ -22,7 +22,7 @@ module Rack
       end
 
       if @block.call(env)
-        stackflame.open_flamegraph
+        stackflame.open_flamegraph(request: env['PATH_INFO'])
       end
 
       result

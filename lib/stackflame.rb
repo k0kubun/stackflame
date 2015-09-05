@@ -1,6 +1,7 @@
 require "stackflame/version"
 require "rack/stackflame"
 require "stackprof"
+require "uri"
 
 class Stackflame
   DEFAULT_OPTIONS = {
@@ -24,20 +25,31 @@ class Stackflame
     end
   end
 
-  def open_flamegraph
+  def open_flamegraph(params = {})
+    params = params.merge(data: temp_js_path)
     if system("which osascript > /dev/null")
       # NOTE: `open` can't open path with query string
-      `osascript -e 'open location "#{flamegraph_path}"'`
+      `osascript -e 'open location "#{flamegraph_path(params)}"'`
     else
-      puts "This OS is not supported. Please open: #{flamegraph_path}"
+      puts "This OS is not supported. Please open: #{flamegraph_path(params)}"
     end
   end
 
   private
 
-  def flamegraph_path
+  def flamegraph_path(params)
     viewer_path = File.expand_path('../../vendor/viewer.html', __FILE__)
-    "file://#{viewer_path}?data=#{temp_js_path}"
+    "file://#{viewer_path}#{to_query(params)}"
+  end
+
+  def to_query(params)
+    return '' if params.size == 0
+
+    query = '?'
+    params.each do |key, value|
+      query += "#{URI.escape(key)}=#{URI.escape(value)}"
+    end
+    query
   end
 
   def temp_js_path
