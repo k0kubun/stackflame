@@ -23,6 +23,12 @@ If you use OSX, flamegraph will be opened with your default browser.
 
 ![](http://i.gyazo.com/47871c2de985298c61d0fcca041a34d0.png)
 
+### Rack middlware
+
+```ruby
+use Rack::Stackflame, interval: 10
+```
+
 ## License
 
 MIT License

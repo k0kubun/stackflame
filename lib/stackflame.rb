@@ -3,14 +3,21 @@ require "rack/stackflame"
 require "stackprof"
 
 class Stackflame
-  def self.profile(mode: :cpu, &block)
+  DEFAULT_OPTIONS = {
+    interval: 1000,
+    mode:     :cpu,
+    raw:      true,
+  }.freeze
+
+  def self.profile(options = {}, &block)
     stackflame = self.new
-    stackflame.run(mode, &block)
+    stackflame.run(options, &block)
     stackflame.open_flamegraph
   end
 
-  def run(mode, &block)
-    result = StackProf.run(mode: mode, raw: true, &block)
+  def run(options = {}, &block)
+    options = DEFAULT_OPTIONS.merge(options)
+    result  = StackProf.run(options, &block)
 
     File.open(temp_js_path, 'w') do |f|
       StackProf::Report.new(result).print_flamegraph(f)
