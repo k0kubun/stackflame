@@ -45,11 +45,11 @@ class Stackflame
   def to_query(params)
     return '' if params.size == 0
 
-    query = '?'
+    queries = []
     params.each do |key, value|
-      query += "#{URI.escape(key)}=#{URI.escape(value)}"
+      queries << "#{URI.escape(key)}=#{URI.escape(value)}"
     end
-    query
+    "?#{queries.join('&')}"
   end
 
   def temp_js_path
